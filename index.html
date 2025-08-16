@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KairosLive — Event Contracts Trading Intelligence</title>
+  <meta name="description" content="Find trading opportunities in prediction markets. News-to-market impact in real-time, across elections, sports, crypto, and entertainment." />
+  <link rel="canonical" href="https://kairoslive.example" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="KairosLive — Event Contracts Trading Intelligence" />
+  <meta property="og:description" content="See how news moves markets, in real time. Fewer tools. Faster insight." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="KairosLive" />
+  <meta property="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2Pkf6k+M2Z9YjW8MZgZl4rJt0Q3kQmF0o3m2eXw7aY3HqH4oFg5x8G3xVA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Chart.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#070a12;
+      --bg-elev:#0e1423;
+      --text:#dfe6ff;
+      --muted:#98a2c3;
+      --brand:#6ee7ff;
+      --brand-2:#a78bfa;
+      --accent:#34d399;
+      --danger:#ff6b6b;
+      --warning:#fbbf24;
+      --grid:#0c1220;
+      --glass:rgba(255,255,255,0.06);
+      --blur:12px;
+      --radius:18px;
+      --radius-lg:26px;
+      --shadow: 0 10px 30px rgba(0,0,0,.45);
+    }
+
+    /* Global reset / base */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Rajdhani', system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 80% -20%, rgba(104,117,245,.25), transparent 60%),
+                  radial-gradient(800px 500px at -10% 10%, rgba(45,212,191,.18), transparent 55%),
+                  var(--bg);
+      overflow-x:hidden;
+      line-height:1.4;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:min(1200px, 92vw);margin-inline:auto}
+
+    /* Skip link */
+    .skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip:focus{left:16px;top:16px;width:auto;height:auto;background:var(--bg-elev);padding:.6rem 1rem;border-radius:10px;outline:2px solid var(--brand)}
+
+    /* Background grid + particles */
+    .bg-grid{
+      position:fixed;inset:0;pointer-events:none;z-index:-2;
+      background-image: linear-gradient(0deg, var(--grid) 1px, transparent 1px),
+                        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(60% 40% at 50% 10%, black, transparent 75%);
+    }
+    .particles{position:fixed;inset:0;pointer-events:none;z-index:-1}
+    .particles::before,.particles::after{
+      content:"";position:absolute;border-radius:9999px;filter:blur(40px);opacity:.4;
+      animation:float 14s ease-in-out infinite;
+    }
+    .particles::before{width:260px;height:260px;background:conic-gradient(from 0deg, var(--brand), transparent 60%);left:6%;top:12%}
+    .particles::after{width:360px;height:360px;background:conic-gradient(from 90deg, var(--brand-2), transparent 60%);right:4%;top:8%;animation-duration:18s}
+    @keyframes float{50%{transform:translateY(18px)}100%{transform:none}}
+
+    /* Navbar */
+    .navbar{position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.2) blur(10px);background:linear-gradient(to bottom, rgba(7,10,18,.85), rgba(7,10,18,.55));border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;gap:.6rem;align-items:center;font-family:'Orbitron', sans-serif;font-weight:800;letter-spacing:.5px}
+    .brand i{color:var(--brand)}
+    .brand span{font-size:1.15rem}
+    .nav-menu{display:flex;gap:20px;align-items:center}
+    .nav-menu a{padding:.55rem .9rem;border-radius:12px;color:var(--muted)}
+    .nav-menu a:hover,.nav-menu a:focus{color:var(--text);background:var(--glass)}
+    .cta{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#020617;padding:.6rem 1rem;border-radius:14px;font-weight:700;box-shadow:0 6px 18px rgba(103, 232, 249, .20)}
+    .cta:hover{filter:brightness(1.05)}
+
+    /* Hide mobile drawer by default (prevents duplicate header on desktop) */
+    .nav-drawer{display:none}
+
+    /* Mobile nav */
+    .hamburger{display:none;flex-direction:column;gap:5px}
+    .hamburger button{background:none;border:none;color:var(--text);padding:.4rem;border-radius:8px}
+    .hamburger .bar{display:block;width:22px;height:2px;background:var(--text)}
+
+    @media (max-width: 860px){
+      .nav-menu{display:none}
+      .hamburger{display:flex}
+      .nav-drawer{
+        position:fixed;inset:56px 12px auto 12px;background:var(--bg-elev);
+        border:1px solid rgba(255,255,255,.07);border-radius:16px;box-shadow:var(--shadow);
+        padding:10px;display:none
+      }
+      .nav-drawer.open{display:block}
+      .nav-drawer a{display:block;padding:.8rem;border-radius:12px;color:var(--muted)}
+      .nav-drawer a + a{margin-top:4px}
+      .nav-drawer a:hover{background:var(--glass);color:var(--text)}
+    }
+
+    /* Hero */
+    .hero{padding:clamp(48px, 6vw, 88px) 0 40px;display:grid;grid-template-columns: 1.06fr .94fr;gap:42px;align-items:center}
+    .hero h1{font-family:'Orbitron',sans-serif;font-weight:900;font-size:clamp(34px, 5vw, 64px);line-height:1.02;margin:0}
+    .gradient{background:linear-gradient(120deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .subtitle{color:var(--muted);font-size:clamp(16px, 2.2vw, 18px);max-width:60ch;margin:16px 0 24px}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+    .btn{display:inline-flex;gap:.6rem;align-items:center;padding:.9rem 1.1rem;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:var(--bg-elev);color:var(--text);font-weight:700}
+    .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#020617;border:none}
+    .btn-ghost{background:transparent}
+    .terminal{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden}
+    .terminal-head{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(2,6,23,.75)}
+    .dots{display:flex;gap:6px}
+    .dot{width:10px;height:10px;border-radius:50%}
+    .dot.red{background:#ff5f56}.dot.yellow{background:#ffbd2e}.dot.green{background:#27c93f}
+    .term-title{font-size:.9rem;color:var(--muted)}
+    .term-body{display:grid;grid-template-columns: 1fr;gap:12px;padding:14px}
+    .chart-wrap{background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:8px}
+    .ticker-list{display:grid;gap:10px}
+    .row{display:grid;grid-template-columns: 1fr auto auto;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:10px 12px;border-radius:12px}
+    .row .symbol{font-weight:700;color:#e5edff}
+    .row .price.up{color:var(--accent)}
+    .row .price.down{color:var(--danger)}
+    .row .change{font-variant-numeric:tabular-nums;color:var(--muted)}
+    @media (max-width: 980px){.hero{grid-template-columns:1fr}.term-body{grid-template-columns:1fr}}
+
+    /* Sections */
+    .section{padding:70px 0}
+    .section h2{font-family:'Orbitron',sans-serif;font-size:clamp(24px, 3.4vw, 36px);margin:0 0 18px}
+
+    /* News Impact */
+    .news-grid{display:grid;grid-template-columns: 1fr 36px 1fr;gap:18px;align-items:center}
+    .news-feed{display:grid;gap:12px}
+    .news-card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px}
+    .news-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+    .badge{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:#06121f;background:linear-gradient(120deg,var(--warning),#ffdca8);padding:.3rem .6rem;border-radius:999px}
+    .pulse{width:8px;height:8px;background:#e11d48;border-radius:999px;box-shadow:0 0 0 0 rgba(225,29,72,.7);animation:pulse 1.8s infinite}
+    @keyframes pulse{to{box-shadow:0 0 0 14px rgba(225,29,72,0)}}
+    .news-time{color:var(--muted);font-size:.9rem}
+    .news-card h3{margin:.2rem 0 .2rem}
+    .news-card p{color:var(--muted);margin:0}
+    .arrow{display:flex;flex-direction:column;align-items:center;gap:6px}
+    .arrow .line{width:4px;height:100%;background:linear-gradient(var(--brand),var(--brand-2));border-radius:999px}
+    .arrow .head{width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:12px solid var(--brand-2)}
+    .arrow .label{font-weight:800;color:var(--muted)}
+    .contracts{display:grid;grid-template-columns: repeat(3, minmax(0,1fr));gap:12px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px}
+    .card .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .critical{padding:.16rem .5rem;border-radius:999px;font-weight:800;font-size:.8rem}
+    .critical.high{background:rgba(239,68,68,.18);color:#fecaca;border:1px solid rgba(239,68,68,.3)}
+    .critical.medium{background:rgba(245,158,11,.18);color:#fde68a;border:1px solid rgba(245,158,11,.3)}
+    .critical.low{background:rgba(16,185,129,.18);color:#a7f3d0;border:1px solid rgba(16,185,129,.3)}
+    .kv{display:flex;justify-content:space-between;color:var(--muted)}
+    @media (max-width: 980px){.news-grid{grid-template-columns:1fr}.arrow{display:none}.contracts{grid-template-columns: 1fr 1fr}.contracts .card:last-child{grid-column:span 2}}
+
+    /* Consolidation / Features — spacing + wrapping polish */
+    #features.section h2{margin-bottom:18px}
+    .consol{background:linear-gradient(180deg, rgba(67,56,202,.15), rgba(0,0,0,0))}
+    .tools{display:flex;flex-wrap:wrap;gap:14px 12px;margin-top:6px}
+    .tool{
+      display:flex;align-items:center;gap:10px;
+      background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.15);
+      padding:.7rem .9rem;border-radius:14px;color:#c4c9e9;
+      flex: 1 1 calc(33.333% - 12px);min-width:220px
+    }
+    .tool.cross{opacity:.65;position:relative}
+    .tool.cross::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg, transparent 0 6px, rgba(255,255,255,.06) 6px 12px);border-radius:14px;pointer-events:none}
+    @media (max-width: 980px){.tool{flex:1 1 calc(50% - 12px)}}
+    @media (max-width: 560px){.tool{flex:1 1 100%}}
+
+    .down-arrow{display:flex;justify-content:center;align-items:center;margin:22px 0 16px}
+    .down-arrow .bar{height:36px;width:6px;background:linear-gradient(var(--brand),var(--brand-2));border-radius:999px}
+    .down-arrow .triangle{width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:18px solid var(--brand-2)}
+    .platform{display:grid;justify-items:center;text-align:center;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:20px;box-shadow:var(--shadow);margin-top:4px}
+    .pf-feats{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:10px}
+    .pf-feats .chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);padding:.5rem .75rem;border-radius:999px}
+
+    /* Contact */
+    .contact-grid 
+    {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* equal width columns */
+  gap: 24px;                      /* a little more breathing room */
+  width: 100%;                    /* span the full width */
+  max-width: 1200px;              /* optional: keeps it from stretching too far on big screens */
+  margin: 0 auto;                 /* center it nicely */
+    }
+    @media (max-width: 980px){.contact-grid{grid-template-columns:1fr}}
+
+    /* Footer */
+    footer{border-top:1px solid rgba(255,255,255,.06);padding:26px 0;color:var(--muted)}
+    .foot-grid{display:grid;grid-template-columns: 1.2fr repeat(3, 1fr);gap:16px}
+    .foot-grid h4{margin:0 0 8px;color:var(--text)}
+    .foot-grid a{color:var(--muted)}
+    .foot-grid a:hover{color:var(--text)}
+    .foot-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:12px;border-top:1px solid rgba(255,255,255,.06);padding-top:12px}
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .particles::before,.particles::after{animation:none}
+      .pulse{animation:none}
+    }
+    /* Founder Message */
+    .founder { padding: 60px 0; }
+    .founder .wrap{
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 22px;
+    }
+    .founder h2{
+    font-family:'Orbitron',sans-serif;
+    font-size: clamp(24px, 3.4vw, 36px);
+    margin: 0 0 8px;
+    }
+    .founder p{ color: var(--muted); margin: 0 0 16px; }
+    .video-frame{
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    padding: 10px;
+    /* subtle on-brand border frame */
+    background: linear-gradient(135deg, rgba(110,231,255,.18), rgba(167,139,250,.18));
+    border: 1px solid rgba(255,255,255,.10);
+    }
+    .video-frame-inner{
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    aspect-ratio: 16 / 9; /* keeps it responsive */
+    }
+    .video-frame-inner iframe{
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    }
+
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="particles" aria-hidden="true"></div>
+
+  <nav class="navbar" role="navigation" aria-label="Global">
+    <div class="container nav-inner">
+      <a class="brand" href="#home" aria-label="KairosLive home">
+        <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+        <span>KairosLive</span>
+      </a>
+      <div class="nav-menu" aria-label="Primary">
+        <a href="#home">Home</a>
+        <a href="#impact">News Impact</a>
+        <a href="#features">Features</a>
+        <a href="#contact">Contact</a>
+        <a class="cta" href="https://docs.google.com/forms/d/13Tam9Pl2PGjJI-vMx3TNz-EXtfvJE-oYFFCW6nV4FZA/viewform" rel="noopener" target="_blank">Get Started</a>
+      </div>
+      <div class="hamburger">
+        <button id="hamburgerBtn" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+    <div class="container">
+      <div id="mobileNav" class="nav-drawer" role="dialog" aria-modal="false" aria-label="Mobile navigation">
+        <a href="#home">Home</a>
+        <a href="#impact">News Impact</a>
+        <a href="#features">Features</a>
+        <a href="#contact">Contact</a>
+        <a class="cta" href="https://docs.google.com/forms/d/13Tam9Pl2PGjJI-vMx3TNz-EXtfvJE-oYFFCW6nV4FZA/viewform" target="_blank" rel="noopener">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main" tabindex="-1">
+    <!-- HERO -->
+    <section id="home" class="container hero" aria-label="Hero">
+      <div>
+        <h1><span class="gradient">Event Contracts</span><br/>Trading Intelligence</h1>
+        <p class="subtitle">Find trading opportunities in prediction markets. See how news moves markets in real time. From elections to sports, crypto to entertainment — spot the moves before they happen.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://docs.google.com/forms/d/13Tam9Pl2PGjJI-vMx3TNz-EXtfvJE-oYFFCW6nV4FZA/viewform" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i> Get Early Access</a>
+          <button class="btn btn-ghost" type="button" id="demoBtn"><i class="fa-solid fa-play"></i> Watch Demo (soon)</button>
+        </div>
+      </div>
+
+      <aside class="terminal" aria-label="Live Dashboard mock">
+        <div class="terminal-head">
+          <div class="dots" aria-hidden="true">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <span class="term-title">KairosLive Intelligence Dashboard</span>
+        </div>
+        <div class="term-body">
+          <div class="chart-wrap">
+            <canvas id="priceChart" aria-label="Sample price chart" role="img"></canvas>
+          </div>
+          <div class="ticker-list" aria-live="polite">
+            <div class="row"><span class="symbol">BTC EOY 2025 ≥ $150k</span><span class="price up">Yes 72%</span><span class="change">+8.1%</span></div>
+            <div class="row"><span class="symbol">Chiefs to win Super Bowl</span><span class="price down">Yes 45%</span><span class="change">-2.3%</span></div>
+            <div class="row"><span class="symbol">US Rate Cut by Q2 2025</span><span class="price up">Yes 64%</span><span class="change">+5.2%</span></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- NEWS IMPACT -->
+    <section id="impact" class="section container" aria-label="How news moves markets">
+      <h2>How News Moves Markets</h2>
+      <div class="news-grid">
+        <div class="news-feed">
+          <article class="news-card" aria-label="Breaking news item">
+            <div class="news-top">
+              <span class="badge"><span class="pulse" aria-hidden="true"></span> BREAKING</span>
+              <time class="news-time" datetime="2025-08-16T14:34:00-04:00">2:34 PM ET</time>
+            </div>
+            <h3>Federal Reserve Signals Potential Rate Cut</h3>
+            <p>Chair Powell hints at a possible rate reduction in Q2 2025, citing moderating inflation and cooling labor data…</p>
+          </article>
+        </div>
+        <div class="arrow" aria-hidden="true">
+          <div class="line"></div>
+          <div class="head"></div>
+          <div class="label">IMPACT</div>
+        </div>
+        <div class="contracts" role="list">
+          <div class="card" role="listitem">
+            <div class="top"><span class="symbol">FED-RATE-Q2</span><span class="critical high">HIGH</span></div>
+            <div class="kv"><span>∆</span><strong style="color:var(--accent)">+15.3%</strong></div>
+            <div class="kv"><span>Vol</span><span>2.4M</span></div>
+          </div>
+          <div class="card" role="listitem">
+            <div class="top"><span class="symbol">BTC-EOY-2025</span><span class="critical medium">MED</span></div>
+            <div class="kv"><span>∆</span><strong style="color:var(--accent)">+8.7%</strong></div>
+            <div class="kv"><span>Vol</span><span>1.2M</span></div>
+          </div>
+          <div class="card" role="listitem">
+            <div class="top"><span class="symbol">SP500-Q2</span><span class="critical low">LOW</span></div>
+            <div class="kv"><span>∆</span><strong style="color:#c4d7ff">+3.2%</strong></div>
+            <div class="kv"><span>Vol</span><span>890K</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOUNDER MESSAGE -->
+<section id="founder" class="section founder" aria-label="Message from our founder">
+    <div class="container">
+      <div class="wrap">
+        <h2>Message from our Founder</h2>
+        <p>Why we built KairosLive—and how we think about turning news into trading edge.</p>
+        <div class="video-frame" role="group" aria-label="Founder video">
+          <div class="video-frame-inner">
+            <!-- Replace the src with your YouTube share URL (embed form) -->
+            <iframe
+              src="https://www.youtube.com/embed/dySgYF8mNJs"
+              title="Message from our Founder"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+    <!-- FEATURES / CONSOLIDATION -->
+    <section id="features" class="section consol" aria-label="Platform consolidation">
+      <div class="container">
+        <h2>More Intelligence. Fewer Tools.</h2>
+        <div class="tools" role="list">
+          <div class="tool cross" role="listitem"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Bloomberg Terminal</div>
+          <div class="tool cross" role="listitem"><i class="fa-solid fa-newspaper" aria-hidden="true"></i> Expensive News APIs</div>
+          <div class="tool cross" role="listitem"><i class="fa-solid fa-brain" aria-hidden="true"></i> Faulty Advice</div>
+          <div class="tool cross" role="listitem"><i class="fa-solid fa-exchange-alt" aria-hidden="true"></i> Multiple Platforms</div>
+          <div class="tool cross" role="listitem"><i class="fa-solid fa-clock" aria-hidden="true"></i> Delayed Data</div>
+          <div class="tool cross" role="listitem"><i class="fa-solid fa-chart-bar" aria-hidden="true"></i> Basic Analytics</div>
+        </div>
+        <div class="down-arrow" aria-hidden="true" style="gap:8px;flex-direction:column;align-items:center">
+          <div class="bar"></div><div class="triangle"></div>
+          <div class="bar" style="height:18px"></div>
+        </div>
+        <div class="platform">
+          <i class="fa-solid fa-chart-line" style="font-size:28px;color:var(--brand)"></i>
+          <h3 style="margin:10px 0 6px;font-family:'Orbitron',sans-serif">KairosLive</h3>
+          <p style="color:var(--muted);margin:0 0 10px">One unified platform for event contracts trading intelligence</p>
+          <div class="pf-feats">
+            <span class="chip"><i class="fa-solid fa-bolt" aria-hidden="true"></i> FAST DATA</span>
+            <span class="chip"><i class="fa-regular fa-lightbulb" aria-hidden="true"></i> QUICK INSIGHTS</span>
+            <span class="chip"><i class="fa-solid fa-crosshairs" aria-hidden="true"></i> ACCURATE TRACKING</span>
+            <span class="chip"><i class="fa-regular fa-newspaper" aria-hidden="true"></i> PROACTIVE NEWS</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section container" aria-label="Contact">
+      <h2>Get in Touch</h2>
+      <div class="contact-grid">
+        <div class="info">
+          <h3 style="margin:0 0 6px">Ready to get early access?</h3>
+          <p style="color:var(--muted);margin:0 0 12px">Join analysts using KairosLive for market intelligence and trading opportunities.</p>
+          <p><i class="fa-solid fa-location-dot" aria-hidden="true"></i> New York, NY</p>
+          <a class="btn btn-primary" href="https://docs.google.com/forms/d/13Tam9Pl2PGjJI-vMx3TNz-EXtfvJE-oYFFCW6nV4FZA/viewform" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i> Get Early Access</a>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom:6px"><i class="fa-solid fa-chart-line" aria-hidden="true"></i><span>KairosLive</span></div>
+        <p style="margin:0;color:var(--muted)">Professional market intelligence for event contracts. Discover trading opportunities across prediction markets.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <nav aria-label="Product links">
+          <div style="display:grid;gap:6px">
+            <a href="#features">Features</a>
+            <a href="#">Pricing</a>
+            <a href="#">API</a>
+            <a href="#">Documentation</a>
+          </div>
+        </nav>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <nav aria-label="Company links">
+          <div style="display:grid;gap:6px">
+            <a href="#">About</a>
+            <a href="#">Careers</a>
+            <a href="#">Blog</a>
+            <a href="#">Press</a>
+          </div>
+        </nav>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <nav aria-label="Support links">
+          <div style="display:grid;gap:6px">
+            <a href="#">Help Center</a>
+            <a href="#contact">Contact</a>
+            <a href="#">Status</a>
+            <a href="#">Security</a>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="container foot-bottom">
+      <p>© <span id="year"></span> KairosLive. All rights reserved.</p>
+      <div style="display:flex;gap:12px">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile nav
+    const hamBtn = document.getElementById('hamburgerBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    hamBtn?.addEventListener('click', () => {
+      const open = mobileNav.classList.toggle('open');
+      hamBtn.setAttribute('aria-expanded', String(open));
+    });
+
+    // Demo button
+    document.getElementById('demoBtn')?.addEventListener('click', () => {
+      alert('Demo video is coming soon. Join the waitlist to get notified.');
+    });
+
+    // Lead form
+    const form = document.getElementById('leadForm');
+    const statusEl = document.getElementById('formStatus');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      window.open('https://docs.google.com/forms/d/13Tam9Pl2PGjJI-vMx3TNz-EXtfvJE-oYFFCW6nV4FZA/viewform', '_blank', 'noopener');
+      statusEl.textContent = 'Thanks! We\'ll be in touch shortly.';
+      form.reset();
+    });
+
+    // Chart.js sample
+    let chart;
+    function initChart(){
+      const el = document.getElementById('priceChart');
+      if(!el) return;
+      const ctx = el.getContext('2d');
+      const labels = Array.from({length: 30}, (_,i)=> i);
+      const base = 55;
+      const data = labels.map((_,i)=> base + Math.sin(i/2)*4 + (Math.random()-.5)*2);
+
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Implied Probability (%)',
+            data,
+            borderColor: 'rgba(167, 139, 250, .95)',
+            backgroundColor: 'rgba(167, 139, 250, .20)',
+            tension: .35,
+            fill: true,
+            borderWidth: 2
+          }]
+        },
+        options: {
+          animation: {duration: 600},
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {display: false},
+            y: {min: 0, max: 100, ticks: {color: '#a9b4d6'}, grid: {color: 'rgba(255,255,255,.06)'}}
+          },
+          plugins: {
+            legend: {display: false},
+            tooltip: {enabled: true, backgroundColor: 'rgba(2,6,23,.9)'}
+          }
+        }
+      });
+
+      setInterval(()=>{
+        if(!chart) return;
+        const last = chart.data.datasets[0].data.at(-1) ?? 55;
+        const next = Math.max(0, Math.min(100, last + (Math.random()-.5)*2));
+        chart.data.labels.push(chart.data.labels.length);
+        chart.data.datasets[0].data.push(next);
+        if(chart.data.labels.length>60){
+          chart.data.labels.shift();
+          chart.data.datasets[0].data.shift();
+        }
+        chart.update('none');
+      }, 1400);
+    }
+    window.addEventListener('load', initChart);
+  </script>
+</body>
+</html>
+
