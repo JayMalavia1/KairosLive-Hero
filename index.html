@@ -377,12 +377,12 @@
       flex: 1;
     }
     .urgency-badge {
-      background: #ef4444;
-      color: white;
+      background: #6ee7ff;
+      color: #06121f;
       padding: 2px 8px;
       border-radius: 4px;
       font-size: .7rem;
-      font-weight: 700;
+      font-weight: 800;
       animation: pulse 1.5s infinite;
     }
     .sell-reason {
@@ -548,6 +548,187 @@
     }
     .ai-rec-content strong {
       color: #6366f1;
+    }
+    .contract-explanation {
+      background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+    .contract-title {
+      font-weight: 600;
+      font-size: .9rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .contract-description {
+      color: var(--muted);
+      font-size: .85rem;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+    .contract-description strong {
+      color: var(--text);
+    }
+    .contract-risk {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #f59e0b;
+      font-size: .8rem;
+      font-weight: 500;
+    }
+    .contract-risk i {
+      font-size: .75rem;
+    }
+    .contract-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 10px;
+    }
+    .contract-detail {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .detail-label {
+      color: var(--muted);
+      font-size: .85rem;
+    }
+    .detail-value {
+      color: var(--text);
+      font-weight: 600;
+      font-size: .85rem;
+    }
+    .trading-chart {
+      margin: 16px 0;
+    }
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .chart-title {
+      font-weight: 600;
+      font-size: .9rem;
+      color: var(--text);
+    }
+    .current-profit {
+      color: #10b981;
+      font-weight: 700;
+      font-size: .9rem;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .chart-container {
+      background: rgba(0,0,0,.2);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .odds-chart {
+      width: 100%;
+      height: auto;
+    }
+    .axis-label {
+      fill: var(--muted);
+      font-size: 9px;
+      font-weight: 500;
+    }
+    .chart-point-label {
+      fill: var(--text);
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .chart-point-label.entry {
+      fill: #10b981;
+    }
+    .chart-point-label.preferred {
+      fill: #6366f1;
+    }
+    .chart-point-label.current {
+      fill: #6ee7ff;
+    }
+    .time-label {
+      fill: var(--muted);
+      font-size: 8px;
+      font-weight: 500;
+    }
+    .time-label.projected {
+      fill: #6ee7ff;
+      font-style: italic;
+    }
+    .chart-point-label.news {
+      fill: #f59e0b;
+    }
+    .projected-label {
+      fill: #6ee7ff;
+      font-size: 9px;
+      font-weight: 600;
+      font-style: italic;
+      opacity: 0.8;
+    }
+    .chart-legend {
+      display: flex;
+      justify-content: space-around;
+      gap: 16px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .75rem;
+      color: var(--muted);
+    }
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 1px solid #fff;
+    }
+    .legend-dot.entry {
+      background: #10b981;
+    }
+    .legend-dot.preferred {
+      background: #6366f1;
+    }
+    .legend-dot.current {
+      background: #6ee7ff;
+    }
+    .exit-recommendation {
+      background: linear-gradient(135deg, rgba(110,231,255,.18), rgba(110,231,255,.08));
+      border: 1px solid rgba(110,231,255,.35);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 16px;
+    }
+    .rec-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .rec-header i {
+      color: #6ee7ff;
+      font-size: 1rem;
+    }
+    .rec-header strong {
+      color: #6ee7ff;
+      font-size: .9rem;
+      flex: 1;
+    }
+    .rec-reason {
+      color: var(--muted);
+      font-size: .85rem;
+      margin-left: 24px;
     }
     .trading-alerts {
       display: flex;
@@ -791,59 +972,124 @@
       <div class="container">
         <h2>Position Monitoring & AI Insights</h2>
         <div class="monitoring-grid">
-          <!-- Position Card -->
+          <!-- Trading Chart Card -->
           <div class="position-card">
             <div class="position-header">
-              <h3 class="position-title">Your Position</h3>
+              <h3 class="position-title">TSLA-Q4-EARNINGS</h3>
               <span class="position-status">
                 <i class="fa-solid fa-circle" aria-hidden="true"></i>
-                ACTIVE
+                ACTIVE CONTRACT
               </span>
             </div>
             
-            <div class="odds-display danger">
-              <div class="odds-comparison">
-                <div class="odds-entry">
-                  <div class="odds-label">Entry Odds</div>
-                  <div class="odds-value entry">60%</div>
-                </div>
-                <div class="odds-arrow">
-                  <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-                </div>
-                <div class="odds-current">
-                  <div class="odds-label">Current Odds</div>
-                  <div class="odds-value">40%</div>
-                </div>
+            <div class="contract-info">
+              <div class="contract-detail">
+                <span class="detail-label">Win condition:</span>
+                <span class="detail-value">Tesla beats $2.45 EPS estimate</span>
               </div>
-              <div class="odds-change down">
-                <i class="fa-solid fa-arrow-down" aria-hidden="true"></i>
-                -20pts
+              <div class="contract-detail">
+                <span class="detail-label">Position size:</span>
+                <span class="detail-value">$2,500</span>
               </div>
             </div>
             
-            <div class="sell-alert">
-              <div class="sell-header">
+            <div class="trading-chart">
+              <div class="chart-header">
+                <span class="chart-title">Odds Progression</span>
+                <span class="current-profit">+$250 (+5%)</span>
+              </div>
+              
+              <div class="chart-container">
+                <svg viewBox="0 0 320 140" class="odds-chart">
+                  <defs>
+                  <!-- Gradient for area fill -->
+                  <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.3"/>
+                    <stop offset="50%" style="stop-color:#10b981;stop-opacity:0.15"/>
+                    <stop offset="100%" style="stop-color:#10b981;stop-opacity:0.05"/>
+                  </linearGradient>
+                  <linearGradient id="projectedGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#6ee7ff;stop-opacity:0.18"/>
+                    <stop offset="100%" style="stop-color:#6ee7ff;stop-opacity:0.06"/>
+                  </linearGradient>
+                  <!-- Pattern for projected area -->
+                  <pattern id="projectedPattern" patternUnits="userSpaceOnUse" width="4" height="4">
+                    <rect width="4" height="4" fill="rgba(110,231,255,0.06)"/>
+                    <path d="M 0,4 L 4,0" stroke="rgba(110,231,255,0.35)" stroke-width="0.5"/>
+                  </pattern>
+                  </defs>
+                  
+                  <!-- Y-axis labels -->
+                  <text x="15" y="25" class="axis-label">80%</text>
+                  <text x="15" y="45" class="axis-label">60%</text>
+                  <text x="15" y="65" class="axis-label">40%</text>
+                  <text x="15" y="85" class="axis-label">20%</text>
+                  <text x="15" y="105" class="axis-label">0%</text>
+                  
+                  <!-- Historical area fill (green) -->
+                  <path d="M 30 65 Q 60 55 90 45 Q 120 38 150 35 Q 180 37 210 38 Q 225 39 240 40 L 240 120 L 30 120 Z" 
+                        fill="url(#areaGradient)" stroke="none"/>
+                  
+                  <!-- Projected decline area (light blue with pattern) -->
+                  <path d="M 240 40 Q 260 55 280 75 Q 295 90 310 90 L 310 120 L 240 120 Z" 
+                        fill="url(#projectedPattern)" stroke="none"/>
+                  
+                  <!-- Historical curve line (solid green) -->
+                  <path d="M 30 65 Q 60 55 90 45 Q 120 38 150 35 Q 180 37 210 38 Q 225 39 240 40" 
+                        stroke="#10b981" stroke-width="2.5" fill="none"/>
+                  
+                  <!-- Projected decline line (dashed light blue) -->
+                  <path d="M 240 40 Q 260 55 280 75 Q 295 90 310 90" 
+                        stroke="#6ee7ff" stroke-width="2.5" fill="none" stroke-dasharray="4,3" opacity="0.9"/>
+                  
+                  <!-- Key points -->
+                  <circle cx="90" cy="45" r="3" fill="#10b981" stroke="#fff" stroke-width="1.5"/>
+                  <circle cx="150" cy="35" r="3" fill="#6366f1" stroke="#fff" stroke-width="1.5"/>
+                  <circle cx="240" cy="40" r="3" fill="#6ee7ff" stroke="#fff" stroke-width="1.5"/>
+                  
+                  <!-- Point labels -->
+                  <text x="90" y="35" text-anchor="middle" class="chart-point-label entry">60%</text>
+                  <text x="150" y="25" text-anchor="middle" class="chart-point-label preferred">70%</text>
+                  <text x="240" y="30" text-anchor="middle" class="chart-point-label current">65%</text>
+                  
+                  <!-- Projected label -->
+                  <text x="280" y="85" text-anchor="middle" class="projected-label">Projected 12–18%</text>
+                  
+                  <!-- Time labels -->
+                  <text x="90" y="135" text-anchor="middle" class="time-label">Entry</text>
+                  <text x="210" y="135" text-anchor="middle" class="time-label">News Break</text>
+                  <text x="240" y="135" text-anchor="middle" class="time-label">Now</text>
+                  <text x="295" y="135" text-anchor="middle" class="time-label projected">Projected</text>
+                </svg>
+              </div>
+              
+              <div class="chart-legend">
+                <div class="legend-item">
+                  <div class="legend-dot entry"></div>
+                  <span>Entry Point</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-dot preferred"></div>
+                  <span>Target Exit</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-dot current"></div>
+                  <span>Exit Now</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="exit-recommendation">
+              <div class="rec-header">
                 <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
-                <strong>SELL RECOMMENDATION</strong>
+                <strong>EXIT RECOMMENDATION</strong>
                 <span class="urgency-badge">URGENT</span>
               </div>
-              <div class="sell-reason">Exit before market realizes negative impact</div>
-            </div>
-            
-            <div class="position-profit">
-              <div class="profit-display">
-                <span class="profit-label">Current P&L</span>
-                <span class="profit-value">+$250 (+10%)</span>
-              </div>
-            </div>
-            
-            <div style="display: flex; justify-content: space-between; color: var(--muted); font-size: .9rem; margin-top: 12px;">
-              <span>Contract: <strong style="color: var(--text);">TSLA-Q4-EARNINGS</strong></span>
-              <span>Position: <strong style="color: var(--text);">$2,500</strong></span>
+              <div class="rec-reason">Recall news detected 47s ago • Exit before odds drop further</div>
             </div>
           </div>
 
-          <!-- AI Insights Card -->
+          <!-- AI Insights Card (temporarily disabled)
           <div class="ai-insights">
             <div class="insight-header">
               <i class="fa-solid fa-brain" style="color: var(--brand-2); font-size: 1.1rem;" aria-hidden="true"></i>
@@ -907,6 +1153,7 @@
               </div>
             </div>
           </div>
+          -->
         </div>
       </div>
     </section>
@@ -1064,7 +1311,7 @@
       const ctx = el.getContext('2d');
       const labels = Array.from({length: 30}, (_,i)=> i);
       const base = 55;
-      const data = labels.map((_,i)=> base + Math.sin(i/2)*4 + (Math.random()-.5)*2);
+      const data = labels.map((_,i)=> base + Math.sin(i/2)*9 + (Math.random()-.5)*6);
 
       chart = new Chart(ctx, {
         type: 'line',
@@ -1098,7 +1345,7 @@
       setInterval(()=>{
         if(!chart) return;
         const last = chart.data.datasets[0].data.at(-1) ?? 55;
-        const next = Math.max(0, Math.min(100, last + (Math.random()-.5)*2));
+        const next = Math.max(0, Math.min(100, last + (Math.random()-.5)*4));
         chart.data.labels.push(chart.data.labels.length);
         chart.data.datasets[0].data.push(next);
         if(chart.data.labels.length>30){
