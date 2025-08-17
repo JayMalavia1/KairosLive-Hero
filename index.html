@@ -154,6 +154,7 @@
     .pulse{width:8px;height:8px;background:#e11d48;border-radius:999px;box-shadow:0 0 0 0 rgba(225,29,72,.7);animation:pulse 1.8s infinite}
     @keyframes pulse{to{box-shadow:0 0 0 14px rgba(225,29,72,0)}}
     .news-time{color:var(--muted);font-size:.9rem}
+    .news-time.recent{color:#ef4444;font-weight:600}
     .news-card h3{margin:.2rem 0 .2rem}
     .news-card p{color:var(--muted);margin:0}
     .arrow{display:flex;flex-direction:column;align-items:center;gap:6px}
@@ -218,7 +219,10 @@
       .pulse{animation:none}
     }
     /* Founder Message */
-    .founder { padding: 60px 0; }
+    .founder { 
+      padding: 60px 0;
+      background: linear-gradient(180deg, transparent, rgba(167,139,250,.12), transparent);
+    }
     .founder .wrap{
     background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
     border: 1px solid rgba(255,255,255,.08);
@@ -252,6 +256,386 @@
     height: 100%;
     border: 0;
     display: block;
+    }
+    
+    /* Position Monitoring */
+    .position-monitoring {
+      background: linear-gradient(180deg, rgba(52,211,153,.08), transparent 70%);
+      padding: 60px 0;
+    }
+    .monitoring-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .position-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+    .position-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .position-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    .position-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(52,211,153,.2);
+      color: #6ee7b7;
+      padding: .4rem .8rem;
+      border-radius: 999px;
+      font-size: .85rem;
+      font-weight: 600;
+    }
+    .odds-display {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,.3);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 16px 0;
+    }
+    .odds-comparison {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+    }
+    .odds-entry, .odds-current {
+      text-align: center;
+    }
+    .odds-arrow {
+      color: var(--muted);
+      font-size: 1.2rem;
+      margin: 0 8px;
+    }
+    .odds-value.entry {
+      color: #10b981;
+      font-size: 1.5rem;
+    }
+    .odds-label {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 4px;
+    }
+    .odds-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      font-family: 'Orbitron', sans-serif;
+    }
+    .odds-change {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+    .odds-change.up {
+      color: var(--accent);
+    }
+    .odds-change.down {
+      color: #ef4444;
+    }
+    .odds-display.danger {
+      border-color: rgba(239,68,68,.3);
+      background: rgba(239,68,68,.05);
+    }
+    .sell-alert {
+      background: linear-gradient(135deg, rgba(239,68,68,.15), rgba(239,68,68,.08));
+      border: 1px solid rgba(239,68,68,.3);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 16px 0;
+    }
+    .sell-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .sell-header i {
+      color: #ef4444;
+      font-size: 1rem;
+    }
+    .sell-header strong {
+      color: #ef4444;
+      font-size: .9rem;
+      flex: 1;
+    }
+    .urgency-badge {
+      background: #ef4444;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: .7rem;
+      font-weight: 700;
+      animation: pulse 1.5s infinite;
+    }
+    .sell-reason {
+      color: var(--muted);
+      font-size: .85rem;
+      margin-left: 24px;
+    }
+    .ai-insights {
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .insight-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .notification-badge {
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    .insight-prediction {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(239,68,68,.1);
+      border: 1px solid rgba(239,68,68,.3);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+    .prediction-icon {
+      color: #ef4444;
+      font-size: 1.2rem;
+    }
+    .prediction-text {
+      flex: 1;
+    }
+    .prediction-confidence {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: .9rem;
+    }
+    .prediction-metrics {
+      display: flex;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .metric {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .metric-label {
+      color: var(--muted);
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      font-weight: 500;
+    }
+    .metric-value {
+      font-weight: 700;
+      font-size: .9rem;
+    }
+    .metric-value.confidence {
+      color: var(--accent);
+    }
+    .metric-value.impact {
+      color: #10b981;
+    }
+    .metric-value.impact-negative {
+      color: #ef4444;
+    }
+    .danger-alert {
+      border-left: 3px solid #ef4444;
+      background: linear-gradient(135deg, rgba(239,68,68,.08), rgba(239,68,68,.04));
+    }
+    .danger-alert .alert-header i {
+      color: #ef4444;
+    }
+    .danger-alert .alert-value {
+      color: #ef4444;
+      font-weight: 800;
+    }
+    .timing-alert {
+      border-left: 3px solid #6366f1;
+      background: linear-gradient(135deg, rgba(99,102,241,.08), rgba(99,102,241,.04));
+    }
+    .timing-alert .alert-header i {
+      color: #6366f1;
+    }
+    .timing-alert .alert-value {
+      color: #6366f1;
+      font-weight: 700;
+    }
+    .alert-action.urgent {
+      background: #ef4444;
+      color: white;
+      border-color: #dc2626;
+      font-weight: 700;
+      animation: pulse 2s infinite;
+    }
+    .alert-action.urgent:hover {
+      background: #dc2626;
+      border-color: #b91c1c;
+    }
+    .position-profit {
+      background: linear-gradient(135deg, rgba(16,185,129,.15), rgba(16,185,129,.08));
+      border: 1px solid rgba(16,185,129,.3);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 12px 0;
+      text-align: center;
+    }
+    .profit-display {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .profit-label {
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 500;
+    }
+    .profit-value {
+      color: #10b981;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .ai-recommendation {
+      background: linear-gradient(135deg, rgba(99,102,241,.12), rgba(99,102,241,.06));
+      border: 1px solid rgba(99,102,241,.25);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 20px;
+    }
+    .ai-rec-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .ai-rec-header i {
+      color: #6366f1;
+      font-size: 1rem;
+    }
+    .ai-rec-header span {
+      color: #6366f1;
+      font-weight: 600;
+      font-size: .9rem;
+    }
+    .ai-rec-content {
+      color: var(--text);
+      font-size: .9rem;
+      line-height: 1.4;
+    }
+    .ai-rec-content strong {
+      color: #6366f1;
+    }
+    .trading-alerts {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .alert {
+      background: linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 14px;
+      transition: all 0.2s ease;
+    }
+    .alert:hover {
+      background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border-color: rgba(255,255,255,.12);
+    }
+    .profit-alert {
+      border-left: 3px solid #10b981;
+    }
+    .risk-alert {
+      border-left: 3px solid #f59e0b;
+    }
+    .alert-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .alert-header i {
+      font-size: .9rem;
+    }
+    .profit-alert .alert-header i {
+      color: #10b981;
+    }
+    .risk-alert .alert-header i {
+      color: #f59e0b;
+    }
+    .alert-title {
+      font-weight: 600;
+      font-size: .85rem;
+      flex: 1;
+    }
+    .alert-value {
+      font-weight: 700;
+      font-size: .85rem;
+    }
+    .profit-alert .alert-value {
+      color: #10b981;
+    }
+    .risk-alert .alert-value {
+      color: #f59e0b;
+    }
+    .alert-body {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .alert-detail {
+      color: var(--muted);
+      font-size: .8rem;
+      flex: 1;
+    }
+    .alert-action {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--text);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: .75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .alert-action:hover {
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.2);
+    }
+    @media (max-width: 980px) {
+      .monitoring-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .prediction-metrics {
+        gap: 12px;
+      }
     }
 
   </style>
@@ -335,7 +719,7 @@
           <article class="news-card" aria-label="Breaking news item">
             <div class="news-top">
               <span class="badge"><span class="pulse" aria-hidden="true"></span> BREAKING</span>
-              <time class="news-time" datetime="2025-08-16T14:34:00-04:00">2:34 PM ET</time>
+              <time class="news-time live-time" data-timestamp="0">2:34 PM ET</time>
             </div>
             <h3>Federal Reserve Signals Potential Rate Cut</h3>
             <p>Chair Powell hints at a possible rate reduction in Q2 2025, citing moderating inflation and cooling labor data…</p>
@@ -361,6 +745,167 @@
             <div class="top"><span class="symbol">SP500-Q2</span><span class="critical low">LOW</span></div>
             <div class="kv"><span>∆</span><strong style="color:#ffe4c4">+3.2%</strong></div>
             <div class="kv"><span>Vol</span><span>890K</span></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Third News Example -->
+      <div class="news-grid" style="margin-top: 40px;">
+        <div class="news-feed">
+          <article class="news-card" aria-label="Breaking entertainment news">
+            <div class="news-top">
+              <span class="badge"><span class="pulse" aria-hidden="true"></span> BREAKING</span>
+              <time class="news-time live-time" data-timestamp="0">4:45 PM ET</time>
+            </div>
+            <h3>Taylor Swift Announces Surprise Album Drop</h3>
+            <p>Pop superstar confirms new album "Midnight Echoes" will release this Friday, sending fans and music industry into frenzy...</p>
+          </article>
+        </div>
+        <div class="arrow" aria-hidden="true">
+          <div class="line"></div>
+          <div class="head"></div>
+          <div class="label">IMPACT</div>
+        </div>
+        <div class="contracts" role="list">
+          <div class="card" role="listitem">
+            <div class="top"><span class="symbol">SWIFT-GRAMMY</span><span class="critical high">HIGH</span></div>
+            <div class="kv"><span>∆</span><strong style="color:var(--accent)">+22.1%</strong></div>
+            <div class="kv"><span>Vol</span><span>4.2M</span></div>
+          </div>
+          <div class="card" role="listitem">
+            <div class="top"><span class="symbol">SPOTIFY-Q4</span><span class="critical medium">MED</span></div>
+            <div class="kv"><span>∆</span><strong style="color:var(--accent)">+14.8%</strong></div>
+            <div class="kv"><span>Vol</span><span>2.9M</span></div>
+          </div>
+          <div class="card" role="listitem">
+            <div class="top"><span class="symbol">MUSIC-SALES</span><span class="critical low">LOW</span></div>
+            <div class="kv"><span>∆</span><strong style="color:var(--accent)">+6.3%</strong></div>
+            <div class="kv"><span>Vol</span><span>1.1M</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POSITION MONITORING & AI INSIGHTS -->
+    <section id="monitoring" class="section position-monitoring" aria-label="Position monitoring and AI insights">
+      <div class="container">
+        <h2>Position Monitoring & AI Insights</h2>
+        <div class="monitoring-grid">
+          <!-- Position Card -->
+          <div class="position-card">
+            <div class="position-header">
+              <h3 class="position-title">Your Position</h3>
+              <span class="position-status">
+                <i class="fa-solid fa-circle" aria-hidden="true"></i>
+                ACTIVE
+              </span>
+            </div>
+            
+            <div class="odds-display danger">
+              <div class="odds-comparison">
+                <div class="odds-entry">
+                  <div class="odds-label">Entry Odds</div>
+                  <div class="odds-value entry">60%</div>
+                </div>
+                <div class="odds-arrow">
+                  <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                </div>
+                <div class="odds-current">
+                  <div class="odds-label">Current Odds</div>
+                  <div class="odds-value">40%</div>
+                </div>
+              </div>
+              <div class="odds-change down">
+                <i class="fa-solid fa-arrow-down" aria-hidden="true"></i>
+                -20pts
+              </div>
+            </div>
+            
+            <div class="sell-alert">
+              <div class="sell-header">
+                <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                <strong>SELL RECOMMENDATION</strong>
+                <span class="urgency-badge">URGENT</span>
+              </div>
+              <div class="sell-reason">Exit before market realizes negative impact</div>
+            </div>
+            
+            <div class="position-profit">
+              <div class="profit-display">
+                <span class="profit-label">Current P&L</span>
+                <span class="profit-value">+$250 (+10%)</span>
+              </div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; color: var(--muted); font-size: .9rem; margin-top: 12px;">
+              <span>Contract: <strong style="color: var(--text);">TSLA-Q4-EARNINGS</strong></span>
+              <span>Position: <strong style="color: var(--text);">$2,500</strong></span>
+            </div>
+          </div>
+
+          <!-- AI Insights Card -->
+          <div class="ai-insights">
+            <div class="insight-header">
+              <i class="fa-solid fa-brain" style="color: var(--brand-2); font-size: 1.1rem;" aria-hidden="true"></i>
+              <h3 style="margin: 0; font-size: 1.1rem;">AI Market Analysis</h3>
+              <div class="notification-badge"></div>
+            </div>
+            
+            <div class="insight-prediction">
+              <i class="fa-solid fa-trending-up prediction-icon" aria-hidden="true"></i>
+              <div class="prediction-text">
+                <strong>Market Crash Detected</strong>
+                <div style="color: var(--muted); font-size: .85rem; margin-top: 2px;">
+                  Breaking: Tesla's Cybertruck recall expanded to 2.2M vehicles due to safety defects. News broke 47 seconds ago - markets haven't adjusted yet. AI predicts 12-18% drop in Q4 earnings contracts.
+                </div>
+              </div>
+              <div class="prediction-metrics">
+                <div class="metric">
+                  <span class="metric-label">Confidence</span>
+                  <span class="metric-value confidence">87%</span>
+                </div>
+                <div class="metric">
+                  <span class="metric-label">Impact</span>
+                  <span class="metric-value impact-negative">-12-18%</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="trading-alerts">
+              <div class="alert danger-alert">
+                <div class="alert-header">
+                  <i class="fa-solid fa-chart-line-down" aria-hidden="true"></i>
+                  <span class="alert-title">Exit Signal</span>
+                  <span class="alert-value">SELL NOW</span>
+                </div>
+                <div class="alert-body">
+                  <span class="alert-detail">News detected 47s ago • Market adjustment imminent</span>
+                  <button class="alert-action urgent">Exit Position</button>
+                </div>
+              </div>
+              
+              <div class="alert timing-alert">
+                <div class="alert-header">
+                  <i class="fa-solid fa-clock" aria-hidden="true"></i>
+                  <span class="alert-title">Time Advantage</span>
+                  <span class="alert-value">47s</span>
+                </div>
+                <div class="alert-body">
+                  <span class="alert-detail">Ahead of market • Odds haven't updated yet</span>
+                  <button class="alert-action">Execute</button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="ai-recommendation">
+              <div class="ai-rec-header">
+                <i class="fa-solid fa-robot" aria-hidden="true"></i>
+                <span>AI Trading Recommendation</span>
+              </div>
+              <div class="ai-rec-content">
+                <strong>Sell your position now</strong> to lock in 10% gains before retail market fully realizes the impact. Consider setting a limit order with max 18% downside protection as impact shouldn't exceed that threshold.
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -395,10 +940,10 @@
         <div class="tools" role="list">
           <div class="tool cross" role="listitem"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Bloomberg Terminal</div>
           <div class="tool cross" role="listitem"><i class="fa-solid fa-newspaper" aria-hidden="true"></i> Expensive News APIs</div>
-          <div class="tool cross" role="listitem"><i class="fa-solid fa-brain" aria-hidden="true"></i> Faulty Advice</div>
+          <div class="tool cross" role="listitem"><i class="fa-solid fa-brain" aria-hidden="true"></i> Expert Insights</div>
           <div class="tool cross" role="listitem"><i class="fa-solid fa-exchange-alt" aria-hidden="true"></i> Multiple Platforms</div>
-          <div class="tool cross" role="listitem"><i class="fa-solid fa-clock" aria-hidden="true"></i> Delayed Data</div>
-          <div class="tool cross" role="listitem"><i class="fa-solid fa-chart-bar" aria-hidden="true"></i> Basic Analytics</div>
+          <div class="tool cross" role="listitem"><i class="fa-solid fa-clock" aria-hidden="true"></i> Extensive Data</div>
+          <div class="tool cross" role="listitem"><i class="fa-solid fa-chart-bar" aria-hidden="true"></i> AI Position Monitoring</div>
         </div>
         <div class="down-arrow" aria-hidden="true" style="gap:8px;flex-direction:column;align-items:center">
           <div class="bar"></div><div class="triangle"></div>
@@ -528,8 +1073,8 @@
           datasets: [{
             label: 'Implied Probability (%)',
             data,
-            borderColor: 'rgba(167, 139, 250, .95)',
-            backgroundColor: 'rgba(167, 139, 250, .20)',
+            borderColor: 'rgba(59, 130, 246, .95)',
+            backgroundColor: 'rgba(59, 130, 246, .20)',
             tension: .35,
             fill: true,
             borderWidth: 2
@@ -556,15 +1101,61 @@
         const next = Math.max(0, Math.min(100, last + (Math.random()-.5)*2));
         chart.data.labels.push(chart.data.labels.length);
         chart.data.datasets[0].data.push(next);
-        if(chart.data.labels.length>60){
+        if(chart.data.labels.length>30){
           chart.data.labels.shift();
           chart.data.datasets[0].data.shift();
         }
         chart.update('none');
-      }, 1400);
+      }, 900);
     }
     window.addEventListener('load', initChart);
+
+    // Live timestamp updates
+    function updateLiveTimestamps() {
+      const liveTimeElements = document.querySelectorAll('.live-time');
+      liveTimeElements.forEach((element, index) => {
+        // Set different start times for each news item
+        const baseTime = Date.now() - (index * 30000); // 30 seconds apart
+        const timestamp = parseInt(element.dataset.timestamp) || baseTime;
+        const now = Date.now();
+        const diff = now - timestamp;
+        
+        let timeAgo;
+        let isRecent = false;
+        
+        if (diff < 1000) {
+          timeAgo = `${(diff / 1000).toFixed(2)}s ago`;
+          isRecent = true;
+        } else if (diff < 60000) {
+          timeAgo = `${Math.floor(diff / 1000)}s ago`;
+          isRecent = true;
+        } else if (diff < 3600000) {
+          const minutes = (diff / 60000).toFixed(1);
+          timeAgo = `${minutes}m ago`;
+        } else {
+          const hours = (diff / 3600000).toFixed(1);
+          timeAgo = `${hours}h ago`;
+        }
+        
+        element.textContent = timeAgo;
+        
+        // Add red styling for recent timestamps
+        if (isRecent) {
+          element.classList.add('recent');
+        } else {
+          element.classList.remove('recent');
+        }
+        
+        // Update the timestamp for next calculation
+        if (!element.dataset.timestamp || element.dataset.timestamp === '0') {
+          element.dataset.timestamp = baseTime;
+        }
+      });
+    }
+    
+    // Update timestamps every 100ms for smooth real-time feel
+    setInterval(updateLiveTimestamps, 100);
+    updateLiveTimestamps(); // Initial call
   </script>
 </body>
 </html>
-
